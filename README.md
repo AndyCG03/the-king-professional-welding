@@ -47,6 +47,6 @@ Thekingofprofessionalwelding@gmail.com
 
 ## Image provenance
 
-The welding and metalwork photographs are AI-generated illustrations. They are not a portfolio of completed client projects. The website retains an illustration disclosure.
+The home page and project galleries use ten original project photographs supplied by the business. They show trailer repair work, fabricated steel brackets, steel framing and stair fabrication, including work in progress. The photographs are preserved without generative edits. Older illustrative assets remain in the repository but are not displayed as project examples.
 
 This repository contains the website only. Promotional videos, audio masters, client handover documents and production caches are kept outside the public repository. Brand assets are supplied for this business; this repository does not grant a separate license to reuse its identity.

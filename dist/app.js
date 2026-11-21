@@ -104,7 +104,7 @@ updateProgress();
 
 if ('IntersectionObserver' in window) {
   const sectionRatios = new Map();
-  const sections = document.querySelectorAll('#home, #services, #craft, #contact');
+  const sections = document.querySelectorAll('#home, #trailers, #services, #projects, #contact');
   const sectionObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => sectionRatios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0));
     const active = [...sectionRatios].filter(([,ratio]) => ratio > 0).sort((a,b) => b[1] - a[1])[0]?.[0];
