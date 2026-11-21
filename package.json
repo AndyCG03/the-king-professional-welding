@@ -1,0 +1,7 @@
+{
+  "name": "the-king-professional-welding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bilingual static welding business website, ready for Vercel",
+  "scripts": {"dev": "node scripts/serve.mjs", "check": "node scripts/check.mjs"}
+}
