@@ -1,0 +1,9 @@
+.social-section{padding-top:64px;padding-bottom:64px;border-bottom:1px solid var(--border)}
+.social-section h2{font-size:clamp(36px,4vw,52px);margin:16px 0 30px}
+.social-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.social-links>a{display:flex;align-items:center;gap:14px;min-height:96px;padding:22px 18px;border:1px solid var(--border);background:var(--panel);font-size:18px;font-weight:600}
+.social-links>a:hover{border-color:var(--orange);background:#252923}
+.social-badge{display:grid;place-items:center;flex:0 0 42px;height:42px;border:1px solid #ff64284d;border-radius:50%;color:var(--orange);font-size:30px;font-weight:700}
+.social-links small{display:block;font-size:12px;line-height:1.4;font-weight:400;color:var(--muted);margin-top:6px;overflow-wrap:anywhere}
+.social-arrow{margin-left:auto;color:var(--orange);font-size:23px}
+@media(max-width:900px){.social-links{grid-template-columns:1fr}.social-section{padding-top:44px;padding-bottom:44px}.social-links>a{min-height:84px}}
