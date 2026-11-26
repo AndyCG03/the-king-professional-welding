@@ -1,52 +1,58 @@
-# The King of Professional Welding
+# The King of Professional Welding — website v2 (Next.js)
 
-Bilingual English/Spanish website for a welding business in Katy, Texas.
+Bilingual site: English at `/`, Spanish at `/es`. Domain: **https://kingprofessionalwelding.com**.
+Replaces the static `dist/` version (kept untouched in `../dist` and in the `github-public` repo).
 
-## Local development
-
-Requires Node.js. The website has no npm dependencies and needs no compilation.
+## Commands
 
 ```powershell
-npm run check
-npm run dev
+npm install
+npm run dev      # http://localhost:4173
+npm run check    # TypeScript
+npm run build    # production build
+npm run assets   # regenerate favicons + og-image.jpg (requires Python + Pillow, Windows fonts)
 ```
 
-Open http://127.0.0.1:4173 and keep the terminal running during local review.
+## Structure
 
-## Deploy to Vercel
+| Path | Content |
+|---|---|
+| `lib/site.ts` | Business data (name, phone, address, links). Must match Google Business Profile exactly. |
+| `lib/i18n.ts` | All EN/ES copy, titles and meta descriptions |
+| `lib/google-reviews.ts` | Server-only Google Places API (New) client, cached 12 h (ISR) |
+| `app/[lang]/` | Layout (metadata, hreflang, Open Graph) and page |
+| `app/sitemap.ts`, `robots.ts`, `manifest.ts` | SEO routes |
+| `components/` | Header, gallery/lightbox, quote form, reviews, JSON-LD, mobile action bar |
+| `public/` | Favicons, `og-image.jpg` (1200×630, 112 KB — WhatsApp/Facebook preview), photos |
 
-Import this repository into a Vercel project with these settings:
+## SEO included
 
-- Framework Preset: Other
-- Root Directory: repository root
-- Output Directory: dist
-- Build Command: none
-- Install Command: none
+- Unique title/description per language, canonical + `hreflang` (en-US, es-US, x-default).
+- `LocalBusiness`, `WebSite`, `WebPage` and `FAQPage` JSON-LD with confirmed facts only (no invented hours, prices or ratings).
+- `sitemap.xml` with language alternates, `robots.txt`, web manifest, favicons and Apple touch icon.
+- Server-rendered HTML, `next/image` (AVIF/WebP, responsive sizes), self-hosted fonts via `next/font`, security headers.
 
-The included vercel.json configures the static output and response headers. Choose a Vercel plan that permits commercial use.
+## Deploy (Vercel)
 
-## Files
+1. Put the contents of this `web/` folder at the root of the GitHub repo connected to Vercel
+   (`the-king-professional-welding`). `vercel.json` sets the framework to Next.js; in
+   Vercel › Settings › Build, clear the old "Output Directory = dist" override if it remains.
+2. Vercel › Settings › Domains: add `kingprofessionalwelding.com` and `www.kingprofessionalwelding.com`,
+   set the apex as primary (www redirects to it), and apply the DNS records Vercel shows.
+3. After the domain resolves: test the WhatsApp preview by sending the URL in a chat
+   (or Facebook Sharing Debugger), then submit `https://kingprofessionalwelding.com/sitemap.xml`
+   in Google Search Console.
 
-- dist/index.html: page structure and content
-- dist/styles.css, dist/motion.css: responsive styling and motion
-- dist/app.js: language switching, navigation and contact interactions
-- dist/intro.js, dist/intro.css: introductory welding effect
-- dist/assets/: logo, favicon and illustrative images
-- scripts/check.mjs: local asset, anchor and business data checks
-- scripts/serve.mjs: local development server
+## Google reviews
 
-## Business contact
+Without configuration, the Reviews section shows buttons to the Google Business Profile
+(`https://share.google/l5OmoyoyysSBlC4Nw`). To load live reviews:
 
-The King of Professional Welding
+1. Google Cloud console (owner's account) › create project › enable **Places API (New)** › billing account required.
+2. Create an API key; restrict it to *Places API (New)*. The key is only used on the server.
+3. Vercel › Settings › Environment Variables: `GOOGLE_PLACES_API_KEY` (and optionally `GOOGLE_PLACE_ID`;
+   if empty, the site finds it by searching the business name and address).
+4. Redeploy. Google returns the rating, total count and up to 5 reviews; the page refreshes them every 12 h.
 
-+1 832 732 7616
-
-Thekingofprofessionalwelding@gmail.com
-
-21126 Terrace View Dr, Katy, Texas 77449
-
-## Image provenance
-
-The home page and project galleries use ten original project photographs supplied by the business. They show trailer repair work, fabricated steel brackets, steel framing and stair fabrication, including work in progress. The photographs are preserved without generative edits. Older illustrative assets remain in the repository but are not displayed as project examples.
-
-This repository contains the website only. Promotional videos, audio masters, client handover documents and production caches are kept outside the public repository. Brand assets are supplied for this business; this repository does not grant a separate license to reuse its identity.
+Also: in Google Business Profile, set the website to `https://kingprofessionalwelding.com` and keep
+name, phone and address identical to `lib/site.ts`.
