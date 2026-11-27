@@ -1,6 +1,7 @@
 import type {Metadata, Viewport} from 'next';
 import {Barlow, Barlow_Condensed} from 'next/font/google';
 import {notFound} from 'next/navigation';
+import {introBootScript} from '@/components/Intro';
 import {dictionaries, isLang, languages, pathFor} from '@/lib/i18n';
 import {site} from '@/lib/site';
 import '../globals.css';
@@ -53,7 +54,11 @@ export default async function RootLayout({children, params}: {children: React.Re
   const {lang} = await params;
   if (!isLang(lang)) notFound();
   return (
-    <html lang={lang} className={`${barlow.variable} ${condensed.variable}`}>
+    // The intro boot script may add a class to <html> before React hydrates.
+    <html lang={lang} className={`${barlow.variable} ${condensed.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{__html: introBootScript}} />
+      </head>
       <body>{children}</body>
     </html>
   );

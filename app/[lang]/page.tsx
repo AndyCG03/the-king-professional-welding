@@ -3,6 +3,7 @@ import {notFound} from 'next/navigation';
 import {Gallery} from '@/components/Gallery';
 import {Header} from '@/components/Header';
 import {HeadingText} from '@/components/Heading';
+import {Intro} from '@/components/Intro';
 import {JsonLd} from '@/components/JsonLd';
 import {MobileActions} from '@/components/MobileActions';
 import {Motion} from '@/components/Motion';
@@ -25,6 +26,7 @@ export default async function Home({params}: {params: Promise<{lang: string}>}) 
     <>
       <JsonLd lang={lang} />
       <Motion selector=".section-head, .service, .craft-grid > *, .steps > article, .contact-grid > *, .faq-list details, .review-card" />
+      <Intro lang={lang} />
       <a className="skip-link" href="#main">{d.nav.skip}</a>
       <div className="topbar"><span>KATY, TEXAS</span><span>{d.topbar}</span><span>{site.hours}</span></div>
       <Header lang={lang} />

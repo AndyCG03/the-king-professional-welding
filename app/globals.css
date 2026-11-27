@@ -179,3 +179,55 @@ html[lang=es] .google-attribution:before{content:'Reseñas de '}
 .rate-status{font-size:14px;color:var(--orange);margin-top:6px}
 @media(max-width:900px){.rate-panel{grid-template-columns:1fr;gap:20px;padding:24px}}
 @media(prefers-reduced-motion:reduce){.rate-stars label{transition:none}.rate-stars label:hover{transform:none}}
+
+/* ---- Brand intro (v1 design), first visit per session only, ~2 s, skippable ---- */
+.intro-screen{display:none;position:fixed;inset:0;z-index:1000;background:#0c100e;color:#f4f6f3;overflow:hidden;pointer-events:none;isolation:isolate}
+.intro-pending .intro-screen{display:grid;place-items:center;animation:intro-failsafe 3.2s step-end forwards}
+.intro-screen:before,.intro-screen:after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none}
+.intro-screen:before{background:radial-gradient(ellipse at 50% 48%,#ff64281b,transparent 55%),linear-gradient(125deg,transparent 35%,#ffffff04 50%,transparent 65%)}
+.intro-screen:after{inset:22px;border:1px solid #ffffff13;clip-path:polygon(0 0,24% 0,24% 1px,1px 1px,1px 24%,0 24%,0 0,100% 0,100% 100%,76% 100%,76% calc(100% - 1px),calc(100% - 1px) calc(100% - 1px),calc(100% - 1px) 76%,100% 76%,100% 0)}
+.intro-grid{position:absolute;inset:0;z-index:-1;background-image:linear-gradient(#ffffff04 1px,transparent 1px),linear-gradient(90deg,#ffffff04 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse,#0007,transparent 72%)}
+.intro-orbit{position:absolute;width:min(76vw,720px);aspect-ratio:1;border:1px solid #ff642817;border-radius:50%;z-index:-1;transform:rotate(-35deg);animation:intro-orbit 3s ease-out both}
+.intro-orbit:before{content:'';position:absolute;inset:22px;border:1px dashed #ff64281c;border-radius:50%}
+.intro-orbit:after{content:'';position:absolute;inset:-20px;border-top:2px solid #ff64284d;border-radius:50%;clip-path:inset(0 40% 80% 0)}
+.intro-content{width:min(680px,calc(100% - 48px));text-align:center;position:relative;transform:translateY(-8px)}
+.intro-kicker{font-family:var(--font-body),Arial,sans-serif;letter-spacing:4px;font-size:11px;font-weight:600;color:#ff824a;margin-bottom:32px;animation:intro-type 700ms 100ms both}
+.intro-kicker span{display:inline-block;margin-left:24px;color:#a2afa6;font-size:10px;letter-spacing:2px}
+.intro-mark{position:relative;width:clamp(155px,24vh,240px);margin:0 auto 28px;animation:intro-forge 1100ms cubic-bezier(.2,.8,.25,1) both}
+.intro-mark img{width:100%;height:auto;position:relative;z-index:1;filter:drop-shadow(0 0 25px #ff64281c)}
+.intro-halo{position:absolute;inset:15%;background:#ff6428;filter:blur(50px);opacity:.08;animation:intro-glow 2200ms 200ms both}
+.intro-title{font-family:var(--font-display),Impact,'Arial Narrow',sans-serif;font-size:25px;font-weight:700;letter-spacing:4px;line-height:1.1;animation:intro-type 800ms 280ms both}
+.intro-title>span{display:block;font-size:clamp(32px,4.6vw,60px);letter-spacing:1px;margin-top:9px;font-weight:800}
+.intro-title em{font-style:normal;color:#ff6428}
+.intro-weld{height:54px;position:relative;width:min(420px,86%);margin:15px auto 2px;--weld-time:1550ms}
+.intro-seam{position:absolute;top:27px;left:0;width:100%;height:2px;background:linear-gradient(90deg,#ff642820,#ff6428,#ffc28c);transform-origin:left;animation:intro-seam var(--weld-time) 450ms cubic-bezier(.2,.5,.4,1) both}
+.intro-arc{position:absolute;top:23px;left:0;width:9px;height:9px;border-radius:50%;background:#fff2d9;box-shadow:0 0 8px 3px #fff7eb,0 0 22px 8px #ff8a36,0 0 60px 9px #ff64284d;animation:intro-arc var(--weld-time) 450ms cubic-bezier(.2,.5,.4,1) both}
+.intro-weld b{position:absolute;top:26px;left:48%;height:2px;width:15px;background:#ffb56f;opacity:0;transform-origin:left;animation:intro-spark 650ms 1050ms ease-out both;--sx:45px;--sy:-30px;--sr:-35deg}
+.intro-weld b:nth-of-type(2){--sx:-40px;--sy:24px;--sr:145deg;animation-delay:1120ms}
+.intro-weld b:nth-of-type(3){--sx:70px;--sy:19px;--sr:18deg;animation-delay:1190ms}
+.intro-weld b:nth-of-type(4){--sx:18px;--sy:-45px;--sr:-70deg;animation-delay:1260ms}
+.intro-weld b:nth-of-type(5){--sx:-60px;--sy:-18px;--sr:195deg;animation-delay:1330ms}
+.intro-weld b:nth-of-type(6){--sx:30px;--sy:40px;--sr:60deg;animation-delay:1400ms}
+.intro-signature{font-size:11px;font-weight:600;letter-spacing:3px;color:#a2afa6;animation:intro-type 750ms 1000ms both}
+.intro-caption{position:absolute;bottom:40px;left:44px;font-size:10px;letter-spacing:2px;color:#89978d}
+.intro-skip{position:absolute;right:38px;bottom:30px;padding:12px 8px;background:none;border:0;border-bottom:1px solid #ff642860;color:#dce4dc;font:600 11px var(--font-body),Arial,sans-serif;letter-spacing:1.5px;cursor:pointer;pointer-events:auto;min-height:44px}
+.intro-skip:hover{color:#ff824a}
+.intro-screen.is-leaving .intro-content{opacity:0;transform:translateY(-14px);transition:opacity 400ms ease,transform 550ms ease}
+.intro-pending .intro-screen.is-leaving{opacity:0;transform:scale(1.035);transition:opacity 650ms cubic-bezier(.4,0,.2,1),transform 750ms cubic-bezier(.4,0,.2,1)}
+@keyframes intro-forge{from{opacity:0;transform:scale(.94) translateY(16px)}to{opacity:1;transform:none}}
+@keyframes intro-type{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes intro-seam{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes intro-arc{0%{left:0;opacity:0}12%{opacity:1}85%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes intro-spark{0%{opacity:0;transform:translate(0,0) rotate(var(--sr)) scaleX(.2)}15%{opacity:.9}100%{opacity:0;transform:translate(var(--sx),var(--sy)) rotate(var(--sr)) scaleX(.2)}}
+@keyframes intro-glow{0%,100%{opacity:.06}50%{opacity:.25}}
+@keyframes intro-orbit{from{opacity:0;transform:rotate(-45deg) scale(.95)}to{opacity:1;transform:rotate(-20deg) scale(1)}}
+@keyframes intro-failsafe{to{visibility:hidden}}
+@media(max-width:600px){.intro-kicker{font-size:10px;letter-spacing:3px;margin-bottom:25px}.intro-kicker span{display:block;margin:10px 0 0;font-size:9px}.intro-title{font-size:20px}.intro-title>span{font-size:34px}.intro-orbit{width:115vw}.intro-caption{display:none}.intro-skip{right:26px;bottom:26px}.intro-signature{font-size:9px;letter-spacing:2px}}
+@media(prefers-reduced-motion:reduce){.intro-pending .intro-screen{display:none!important}.intro-screen *{animation:none!important;transition:none!important}}
+@media print{.intro-screen{display:none!important}}
+
+/* Mobile bar icons (SVG instead of glyphs that render as emoji on some phones) */
+.mobile-actions a svg{color:var(--orange)}
+.mobile-actions a.primary svg{color:#161814}
+/* While the intro plays, keep the page underneath from scrolling */
+.intro-pending body{overflow:hidden}
